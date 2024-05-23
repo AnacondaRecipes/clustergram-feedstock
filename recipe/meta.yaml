@@ -1,0 +1,51 @@
+{% set name = "clustergram" %}
+{% set version = "0.8.1" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/clustergram-{{ version }}.tar.gz
+  sha256: 0766a804781e5616baf2492ff10d4a40d6261abee87ae6e707601fe3300c7573
+
+build:
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+  skip:  # [py>38]
+
+requirements:
+  host:
+    - python
+    - setuptools >=61.0
+    - wheel
+    - setuptools-scm >=6.2
+    - pip
+  run:
+    - python
+    - pandas
+    - numpy
+    - matplotlib-base
+
+test:
+  source_files:
+    - clustergram/test_clustergram.py
+  imports:
+    - clustergram
+  commands:
+    - pip check
+    - pytest -v clustergram/test_clustergram.py
+  requires:
+    - pip
+    - pytest
+    - bokeh
+    - scikit-learn
+
+about:
+  summary: Clustergram - visualization and diagnostics for cluster analysis
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - psteyer
