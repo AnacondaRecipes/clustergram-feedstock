@@ -50,7 +50,7 @@ about:
     and Gaussian Mixture Model (scikit-learn only) clustering, plus hierarchical/agglomerative 
     clustering using SciPy.
   license: MIT
-  licese_family: MIT
+  license_family: MIT
   license_file: LICENSE
   dev_url: https://github.com/martinfleis/clustergram
   doc_url: https://clustergram.readthedocs.io/en/stable/
