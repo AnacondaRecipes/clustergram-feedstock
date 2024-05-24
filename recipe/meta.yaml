@@ -21,12 +21,15 @@ requirements:
     - wheel
     - setuptools-scm >=6.2
     - pip
+    # mkl variant pulls in intel-openmp which conflicts with llvm-openmp. i.e. force to use openblas variant of numpy, scipy, etc.
+    - blas=*=openblas  # [osx and x86_64]
   run:
     - python
     - pandas
     - numpy
     - matplotlib-base
-
+    # mkl variant pulls in intel-openmp which conflicts with llvm-openmp. i.e. force to use openblas variant of numpy, scipy, etc.
+    - blas=*=openblas  # [osx and x86_64]
 test:
   source_files:
     - clustergram/test_clustergram.py
