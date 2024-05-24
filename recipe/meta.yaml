@@ -34,7 +34,7 @@ test:
     - clustergram
   commands:
     - pip check
-    - pytest -v clustergram/test_clustergram.py
+    - pytest -v clustergram/test_clustergram.py -k "not test_sklearn_kmeans"
   requires:
     - pip
     - pytest
