@@ -37,7 +37,7 @@ test:
     - clustergram
   commands:
     - pip check
-    - pytest -v clustergram/test_clustergram.py
+    - pytest -v --pyargs clustergram
   requires:
     - pip
     - pytest
