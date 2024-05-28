@@ -1,0 +1,61 @@
+{% set name = "clustergram" %}
+{% set version = "0.8.1" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/clustergram-{{ version }}.tar.gz
+  sha256: 0766a804781e5616baf2492ff10d4a40d6261abee87ae6e707601fe3300c7573
+
+build:
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+  skip:  # [py>38]
+
+requirements:
+  host:
+    - python
+    - setuptools >=61.0
+    - wheel
+    - setuptools-scm >=6.2
+    - pip
+    # mkl variant pulls in intel-openmp which conflicts with llvm-openmp. i.e. force to use openblas variant of numpy, scipy, etc.
+    - blas=*=openblas  # [osx and x86_64]
+  run:
+    - python
+    - pandas
+    - numpy
+    - matplotlib-base
+    # mkl variant pulls in intel-openmp which conflicts with llvm-openmp. i.e. force to use openblas variant of numpy, scipy, etc.
+    - blas=*=openblas  # [osx and x86_64]
+test:
+  imports:
+    - clustergram
+  commands:
+    - pip check
+    - pytest -v --pyargs clustergram
+  requires:
+    - pip
+    - pytest
+    - bokeh
+    - scikit-learn
+
+about:
+  home: https://github.com/martinfleis/clustergram
+  summary: Clustergram - visualization and diagnostics for cluster analysis
+  description: |
+    This is a Python implementation, originally based on Tal's script, written 
+    for scikit-learn and RAPIDS cuML implementations of K-Means, Mini Batch K-Means 
+    and Gaussian Mixture Model (scikit-learn only) clustering, plus hierarchical/agglomerative 
+    clustering using SciPy.
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE
+  dev_url: https://github.com/martinfleis/clustergram
+  doc_url: https://clustergram.readthedocs.io/
+
+extra:
+  recipe-maintainers:
+    - psteyer
